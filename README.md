@@ -2,4 +2,4 @@
 
 THIS IS A TEMPLATE OF THE WINDOW USED IN THE ATOMDESK SOFTWARE SUITE.
 
-![alt text](/readm/SCREENSHOT1.png)
+![alt text](/readme/SCREENSHOT1.png)
