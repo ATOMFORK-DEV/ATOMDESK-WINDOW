@@ -1,0 +1,56 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+}
+
+#titlebar {
+  height: 28px; /* Reduced from 32px */
+  background-color: #2f3241;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  -webkit-app-region: drag;
+}
+
+#drag-region {
+  flex-grow: 1;
+}
+
+#window-controls {
+  display: flex;
+  -webkit-app-region: no-drag;
+  margin-right: 8px; /* Add some margin to the right */
+}
+
+.button {
+  width: 16px; /* Reduced from 32px */
+  height: 16px; /* Reduced from 32px */
+  border-radius: 50%;
+  margin-right: 6px; /* Reduced from 8px */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+#min-button {
+  background-color: #ffbd44;
+}
+
+#max-button, #restore-button {
+  background-color: #00ca4e;
+}
+
+#close-button {
+  background-color: #ff605c;
+}
+
+.button:hover {
+  filter: brightness(85%);
+}
+
+#content {
+  padding: 20px;
+}
