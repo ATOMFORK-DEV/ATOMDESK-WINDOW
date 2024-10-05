@@ -1,7 +1,8 @@
-const { app, BrowserWindow, ipcMain } = require('electron/main')
+const { app, BrowserWindow, ipcMain, Tray, Menu } = require('electron/main')
 const path = require('node:path')
 
 let win;
+let tray;
 
 function createWindow () {
   win = new BrowserWindow({
@@ -25,9 +26,47 @@ function createWindow () {
   win.on('unmaximize', () => {
     win.webContents.send('window-unmaximized');
   });
+
+  win.on('minimize', (event) => {
+    event.preventDefault();
+    win.hide();
+  });
+
+  // Remove the 'close' event listener
 }
 
-app.whenReady().then(createWindow)
+function createTray() {
+  tray = new Tray(path.join(__dirname, '..', 'assets', 'favicon', 'favicon.ico'));
+  const contextMenu = Menu.buildFromTemplate([
+    { 
+      label: 'Show', click: () => {
+        win.show();
+      } 
+    },
+    { 
+      label: 'Minimize', click: () => {
+        win.hide();
+      } 
+    },
+    { type: 'separator' },
+    { 
+      label: 'Close', click: () => {
+        app.quit();
+      } 
+    }
+  ]);
+  tray.setToolTip('My Electron App');
+  tray.setContextMenu(contextMenu);
+
+  tray.on('click', () => {
+    win.isVisible() ? win.hide() : win.show();
+  });
+}
+
+app.whenReady().then(() => {
+  createWindow();
+  createTray();
+})
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
@@ -42,7 +81,7 @@ app.on('activate', () => {
 })
 
 ipcMain.on('minimize-window', () => {
-  win.minimize();
+  win.hide();
 });
 
 ipcMain.on('maximize-window', () => {
@@ -54,5 +93,5 @@ ipcMain.on('unmaximize-window', () => {
 });
 
 ipcMain.on('close-window', () => {
-  win.close();
+  app.quit(); // Change this to quit the app instead of just closing the window
 });
