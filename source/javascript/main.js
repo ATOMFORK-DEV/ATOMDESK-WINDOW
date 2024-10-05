@@ -7,7 +7,9 @@ function createWindow () {
     height: 600,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js')
-    }
+    },
+    
+    icon: path.join(__dirname, '..', 'assets', 'favicon', 'favicon.ico')
   })
 
   win.loadFile(path.join(__dirname, '..', 'index.html'))
