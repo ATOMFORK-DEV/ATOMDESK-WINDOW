@@ -9,15 +9,21 @@ function createWindow () {
     width: 800,
     height: 600,
     frame: false,
+    transparent: true,
+    backgroundColor: '#ffffff',
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
       nodeIntegration: true,
       contextIsolation: false
     },
-    icon: path.join(__dirname, '..', 'assets', 'favicon', 'favicon.ico')
+    icon: path.join(__dirname, '..', 'assets', 'favicon', 'favicon.ico'),
+    title: 'WINDOW' // Add this line to set the window title
   })
 
   win.loadFile(path.join(__dirname, '..', 'index.html'))
+
+  // Set the window title again after loading the file
+  win.setTitle('WINDOW')
 
   win.on('maximize', () => {
     win.webContents.send('window-maximized');
