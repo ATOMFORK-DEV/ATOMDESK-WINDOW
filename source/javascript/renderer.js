@@ -1,4 +1,4 @@
-const { ipcRenderer } = require('electron');
+const { ipcRenderer, contextBridge } = require('electron');
 
 document.getElementById('min-button').addEventListener('click', () => {
   ipcRenderer.send('minimize-window');
@@ -28,4 +28,10 @@ ipcRenderer.on('window-maximized', () => {
 ipcRenderer.on('window-unmaximized', () => {
   document.getElementById('max-button').style.display = 'flex';
   document.getElementById('restore-button').style.display = 'none';
+});
+
+// Add event listener for the titlebar icon
+document.getElementById('titlebar-icon').addEventListener('contextmenu', (e) => {
+  e.preventDefault();
+  ipcRenderer.send('show-titlebar-context-menu');
 });
